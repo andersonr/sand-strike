@@ -5,15 +5,15 @@ import { QRCodeSVG } from "qrcode.react";
 
 export function TournamentTicket() {
 	return (
-		<div className="w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+		<div className="container mx-auto bg-white overflow-hidden">
 			<div className="p-4 border-b">
 				<div className="flex flex-col sm:flex-row">
 					<div className="mb-4 sm:mb-0 sm:mr-4 flex-shrink-0">
 						<Image
-							src="/placeholder.svg?height=100&width=100"
+							src="/images/ball-soccer-ball-svgrepo-com.svg?height=80&width=80"
 							alt="Tournament logo"
-							width={100}
-							height={100}
+							width={80}
+							height={80}
 							className="rounded"
 						/>
 					</div>
@@ -21,29 +21,32 @@ export function TournamentTicket() {
 						<h2 className="text-xl font-bold">
 							11º Torneio CT Denner de Futevôlei
 						</h2>
-						<p className="text-sm text-gray-600">Esportivo</p>
+						<div className="bg-blue-100 sm:w-min p-1 rounded">
+							<p className="text-sm text-gray-600">Futevôlei</p>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div className="p-4 flex flex-col sm:flex-row justify-between items-start">
 				<div className="space-y-2 w-full sm:w-auto mb-4 sm:mb-0">
 					<p className="text-sm">
-						<span className="font-semibold">Local:</span> Quadra esportiva
+						<span className="font-semibold">Local:</span> Blupadel esportes de
+						areia
 					</p>
 					<p className="text-sm">
-						<span className="font-semibold">Rua:</span> Rua 2, 1111 - Itapema
-						Norte
+						<span className="font-semibold">Endereço:</span> Rua 2 de Setembro,
+						1111 - Itoupava Norte
 					</p>
 					<p className="text-sm">
-						<span className="font-semibold">Município:</span> Itapema
+						<span className="font-semibold">Município:</span> Blumenau
 					</p>
 					<p className="text-sm">
-						<span className="font-semibold">Data:</span> 10/11/24 a partir das
+						<span className="font-semibold">Data:</span> 30/11/24 a partir das
 						8:00 hrs
 					</p>
 				</div>
 				<div className="flex-shrink-0 self-end sm:self-start">
-					<QRCodeSVG value="https://example.com/tournament" size={128} />
+					<QRCodeSVG value="https://example.com/tournament" size={100} />
 				</div>
 			</div>
 			<div className="bg-gray-100 p-2 text-center text-sm text-gray-600">
@@ -58,6 +61,7 @@ export function TournamentTicket() {
 					<li>3º R$ 100,00</li>
 				</ul>
 			</div>
+			<hr />
 		</div>
 	);
 }
