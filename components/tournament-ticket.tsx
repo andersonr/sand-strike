@@ -50,8 +50,8 @@ export function TournamentTicket() {
 				</div>
 			</div>
 			<div className="bg-gray-100 p-2 text-center text-sm text-gray-600">
-				Modalidade: Dupla de praia em fase de grupos + Eliminação
-				simples(Corrida de duplas)
+				Modalidade: Rei da praia na fase de grupos + Eliminação simples(Sorteio
+				de duplas antes da fase de eliminação)
 			</div>
 			<div className="p-4 border-t">
 				<p className="text-sm font-semibold mb-2">Premiação:</p>
