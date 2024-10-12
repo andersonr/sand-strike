@@ -9,6 +9,7 @@ Site para criação de torneios de esportes de areia.
     - [Shadcn/ui](https://ui.shadcn.com/docs)
     - [Tailwind](https://tailwindcss.com/docs/hover-focus-and-other-states)
     - [Biome](https://biomejs.dev/guides/getting-started/)
+    - [SVG Repo](https://www.svgrepo.com/vectors/ball/filled/4) Para imagens
     
 
 ## Como contribuir
@@ -22,3 +23,4 @@ Site para criação de torneios de esportes de areia.
     /torneios/[slug]       -> É a página que exibe as informações do torneio
     /torneios/criar        -> Formulário de criação de torneios
     /adm/torneios/[slug]   -> [to-do] Página de administração do torneio
+

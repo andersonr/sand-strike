@@ -3,7 +3,35 @@
 import Image from "next/image";
 import { QRCodeSVG } from "qrcode.react";
 
-export function TournamentTicket() {
+interface TournamentInfo {
+	title: string;
+	category: Category;
+	place: string;
+	address: string;
+	city: string;
+	date: Date;
+	time: string;
+	slug: unknown;
+}
+
+export enum Category {
+	FUTEVOLEI = "FUTEVÔLEI",
+	VOLEI = "VOLEI",
+	BEACHTENNIS = "BEACHTENNIS",
+}
+
+export function TournamentTicket({
+	title,
+	category,
+	place,
+	address,
+	city,
+	date,
+	time,
+	slug,
+}: TournamentInfo) {
+	const qrCodeAddress = `{basepath}/torneios/${slug}`;
+
 	return (
 		<div className="container mx-auto bg-white overflow-hidden">
 			<div className="p-4 border-b">
@@ -19,10 +47,11 @@ export function TournamentTicket() {
 					</div>
 					<div className="flex-grow">
 						<h2 className="text-xl font-bold">
-							11º Torneio CT Denner de Futevôlei
+							{/* 11º Torneio CT Denner de Futevôlei */}
+							{title}
 						</h2>
 						<div className="bg-blue-100 sm:w-min p-1 rounded">
-							<p className="text-sm text-gray-600">Futevôlei</p>
+							<p className="text-sm text-gray-600">{category?.toString()}</p>
 						</div>
 					</div>
 				</div>
@@ -30,35 +59,40 @@ export function TournamentTicket() {
 			<div className="p-4 flex flex-col sm:flex-row justify-between items-start">
 				<div className="space-y-2 w-full sm:w-auto mb-4 sm:mb-0">
 					<p className="text-sm">
-						<span className="font-semibold">Local:</span> Blupadel esportes de
-						areia
+						<span className="font-semibold">Local:</span> {place}
 					</p>
 					<p className="text-sm">
-						<span className="font-semibold">Endereço:</span> Rua 2 de Setembro,
-						1111 - Itoupava Norte
+						<span className="font-semibold">Endereço:</span> {address}
 					</p>
 					<p className="text-sm">
-						<span className="font-semibold">Município:</span> Blumenau
+						<span className="font-semibold">Município:</span> {city}
 					</p>
 					<p className="text-sm">
-						<span className="font-semibold">Data:</span> 30/11/24 a partir das
-						8:00 hrs
+						<span className="font-semibold">Data:</span>{" "}
+						{Intl.DateTimeFormat("pt-BR", {
+							day: "2-digit",
+							month: "2-digit",
+							year: "numeric",
+						}).format(date)}{" "}
+						a partir das {time}
 					</p>
 				</div>
 				<div className="flex-shrink-0 self-end sm:self-start">
-					<QRCodeSVG value="https://example.com/tournament" size={100} />
+					<QRCodeSVG value={qrCodeAddress} size={100} />
 				</div>
 			</div>
 			<div className="bg-gray-100 p-2 text-center text-sm text-gray-600">
-				Modalidade: Rei da praia na fase de grupos + Eliminação simples(Sorteio
-				de duplas antes da fase de eliminação)
+				Mecânica: Fase de grupos no modelo &quot;Rei da praia&quot;(Todos contra
+				todos) + Eliminação simples(Sorteio de duplas antes da fase de
+				eliminação)
 			</div>
 			<div className="p-4 border-t">
 				<p className="text-sm font-semibold mb-2">Premiação:</p>
 				<ul className="text-sm list-disc list-inside">
-					<li>1º R$ 400,00</li>
-					<li>2º R$ 200,00</li>
-					<li>3º R$ 100,00</li>
+					<li>1º Troféu</li>
+					<li>2º Troféu</li>
+					<li>3º Troféu</li>
+					<li>4º Troféu</li>
 				</ul>
 			</div>
 			<hr />

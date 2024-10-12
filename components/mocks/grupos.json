@@ -1,0 +1,128 @@
+[
+    {
+       "id": 1,
+       "players": [
+          {
+             "name": "João",
+             "victories": 2,
+             "diff": 5
+          },
+          {
+             "name": "Maria",
+             "victories": 1,
+             "diff": 2
+          },
+          {
+             "name": "Pedro",
+             "victories": 1,
+             "diff": -1
+          },
+          {
+             "name": "Ana",
+             "victories": 2,
+             "diff": 3
+          }
+       ],
+       "games": [
+          {
+             "id": 1,
+             "team1": [
+                "João",
+                "Maria"
+             ],
+             "result": "18 x 15",
+             "team2": [
+                "Pedro",
+                "Ana"
+             ]
+          },
+          {
+             "id": 2,
+             "team1": [
+                "João",
+                "Pedro"
+             ],
+             "result": "18 x 12",
+             "team2": [
+                "Maria",
+                "Ana"
+             ]
+          },
+          {
+             "id": 3,
+             "team1": [
+                "João",
+                "Ana"
+             ],
+             "result": "18 x 16",
+             "team2": [
+                "Pedro",
+                "Maria"
+             ]
+          }
+       ]
+    },
+    {
+       "id": 2,
+       "players": [
+          {
+             "name": "Carlos",
+             "victories": 3,
+             "diff": 7
+          },
+          {
+             "name": "Beatriz",
+             "victories": 1,
+             "diff": -2
+          },
+          {
+             "name": "Rafael",
+             "victories": 0,
+             "diff": -5
+          },
+          {
+             "name": "Luísa",
+             "victories": 2,
+             "diff": 4
+          }
+       ],
+       "games": [
+          {
+             "id": 4,
+             "team1": [
+                "Carlos",
+                "Beatriz"
+             ],
+             "result": "18 x 14",
+             "team2": [
+                "Rafael",
+                "Luísa"
+             ]
+          },
+          {
+             "id": 5,
+             "team1": [
+                "Carlos",
+                "Rafael"
+             ],
+             "result": "18 x 17",
+             "team2": [
+                "Beatriz",
+                "Luísa"
+             ]
+          },
+          {
+             "id": 6,
+             "team1": [
+                "Carlos",
+                "Luísa"
+             ],
+             "result": "18 x 13",
+             "team2": [
+                "Rafael",
+                "Beatriz"
+             ]
+          }
+       ]
+    }
+ ]
