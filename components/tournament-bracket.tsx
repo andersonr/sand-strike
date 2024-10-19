@@ -17,10 +17,12 @@ import {
 } from "@/components/ui/table";
 import { ChevronDown, ChevronUp, ExpandIcon } from "lucide-react";
 import React from "react";
+import data from "./mocks/duplas-sorteadas.json";
 
 type Team = {
 	name: string;
 	seed: number;
+	players: string[];
 };
 
 type Match = {
@@ -33,16 +35,7 @@ type Match = {
 
 type Round = Match[];
 
-const drawData: Team[] = [
-	{ name: "Ronaldinho e Edmundo", seed: 1 },
-	{ name: "Romario e Djalminha", seed: 4 },
-	{ name: "Rivaldo e Ronaldo", seed: 3 },
-	{ name: "Alex e Luizão", seed: 2 },
-	{ name: "Cicero e Diego Souza", seed: 3 },
-	{ name: "Marcion e D'Alessandro", seed: 1 },
-	{ name: "Ceni e Roberto Carlos", seed: 4 },
-	{ name: "Renato Gaúcho e Túlio", seed: 2 },
-];
+const drawData: Team[] = data;
 
 const bracketData: Round[] = [
 	[
@@ -96,10 +89,9 @@ const bracketData: Round[] = [
 
 export function TournamentBracket() {
 	const [eliminationPhaseOpen, setEliminationPhaseOpen] = React.useState(true);
-	const [drawOpen, setDrawOpen] = React.useState(false); // Update 1: Changed initial state to false
+	const [drawOpen, setDrawOpen] = React.useState(false);
 	const [bracketOpen, setBracketOpen] = React.useState(true);
 
-	//space-y-8 p-4
 	return (
 		<div className="mx-auto p-4">
 			<div className="flex items-center justify-between mb-6">
@@ -154,7 +146,7 @@ export function TournamentBracket() {
 											<TableBody>
 												{drawData.map((team, index) => (
 													<TableRow key={index}>
-														<TableCell>{team.name}</TableCell>
+														<TableCell>{team.players.join(" e ")}</TableCell>
 														<TableCell>{team.seed}</TableCell>
 													</TableRow>
 												))}
@@ -185,7 +177,7 @@ export function TournamentBracket() {
 								</CardHeader>
 								<CollapsibleContent>
 									<CardContent>
-										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
 											{bracketData.map((round, roundIndex) => (
 												<div
 													key={roundIndex}

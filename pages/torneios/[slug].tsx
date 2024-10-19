@@ -1,7 +1,8 @@
+import { TopBar } from "@/components/topbar";
 import { TournamentBracket } from "@/components/tournament-bracket";
 import { TournamentGroups } from "@/components/tournament-groups";
 import { Category, TournamentTicket } from "@/components/tournament-ticket";
-import Head from "next/head";
+import HeadTitle from "@/components/ui/head-title";
 import { useRouter } from "next/router";
 
 function Torneio() {
@@ -11,9 +12,8 @@ function Torneio() {
 
 	return (
 		<>
-			<Head>
-				<title>Torneio - {id}</title>
-			</Head>
+			<TopBar />
+			<HeadTitle tabTitle={`Torneio - ${id}`} />
 			<div className="container mx-auto p-4">
 				<TournamentTicket
 					title="11º Torneio CT Denner de Futevolei"

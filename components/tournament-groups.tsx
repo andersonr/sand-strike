@@ -22,11 +22,11 @@ import data from "./mocks/grupos.json";
 const groups = data;
 
 // Extrai a interface do JSON, da pra fazer depois, quando for utilizar no código mesmo
-// interface Player {
-// 	name: string;
-// 	victories: number;
-// 	diff: number;
-// }
+interface Player {
+	name: string;
+	victories: number;
+	diff: number;
+}
 
 // interface Game {
 // 	id: number;
@@ -42,7 +42,7 @@ const groups = data;
 // }
 
 // Função para ordenar os jogadores
-const orderGroupPlayers = (player) => {
+const orderGroupPlayers = (player: Player[]) => {
 	return [...player].sort((a, b) => {
 		if (b.victories !== a.victories) {
 			return b.victories - a.victories; // Ordena por vitórias (decrescente)

@@ -1,0 +1,10 @@
+[
+	{ "players":["Ronaldinho", "Edmundo"], "name": "Ronaldinho e Edmundo", "seed": 1 },
+	{ "players":["Romario", "Djalminha"], "name": "Romario e Djalminha", "seed": 4 },
+	{ "players":["Rivaldo", "Ronaldo"], "name": "Rivaldo e Ronaldo", "seed": 3 },
+	{ "players":["Alex", "Luizão"], "name": "Alex e Luizão", "seed": 2 },
+	{ "players":["Cicero", "Diego Souza"], "name": "Cicero e Diego Souza", "seed": 3 },
+	{ "players":["Maicon", "D'Alessandro"], "name": "Maicon e D'Alessandro", "seed": 1 },
+	{ "players":["Ceni", "Roberto Carlos"], "name": "Ceni e Roberto Carlos", "seed": 4 },
+	{ "players":["Renato Gaúcho", "Túlio"], "name": "Renato Gaúcho e Túlio", "seed": 2 }
+]
