@@ -1,11 +1,11 @@
 import { TopBar } from "@/components/topbar";
-import { TournamentCreatorComponent } from "@/components/tournament-creator";
+import { TournamentCreator } from "@/components/tournament-creator";
 
 function criarTorneio() {
 	return (
 		<>
 			<TopBar />
-			<TournamentCreatorComponent />
+			<TournamentCreator />
 		</>
 	);
 }
