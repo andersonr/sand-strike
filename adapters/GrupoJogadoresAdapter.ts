@@ -6,12 +6,16 @@ export interface GrupoJogadoresRecordData {
 	grupoNome: string;
 }
 
-export interface GrupoJogadoresData {
-	jogadores: GrupoJogadoresRecordData[];
+// export interface GrupoJogadoresData {
+// 	jogadores: GrupoJogadoresRecordData[];
+// }
+
+export interface GrupoJogadorInsertWithGroupName extends GrupoJogadorInsert {
+	groupName: string;
 }
 
 export class GrupoJogadoresAdapter {
-	private data: GrupoJogadoresData;
+	private data: GrupoJogadoresRecordData[];
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -22,21 +26,22 @@ export class GrupoJogadoresAdapter {
 	}
 
 	validate(): void {
-		if (!this.data.jogadores || this.data.jogadores.length === 0) {
+		if (!this.data || this.data.length === 0) {
 			throw new Error("Jogadores do grupo são obrigatórios");
 		}
 	}
 
-	adapt(): GrupoJogadorInsert[] {
+	adapt(): GrupoJogadorInsertWithGroupName[] {
 		this.validate();
 
-		const valueToReturn: GrupoJogadorInsert[] = [];
+		const valueToReturn: GrupoJogadorInsertWithGroupName[] = [];
 
 		// biome-ignore lint/complexity/noForEach: <explanation>
-		this.data.jogadores.forEach((jogador) => {
-			const inscricaoGrupo: GrupoJogadorInsert = {
+		this.data.forEach((jogador) => {
+			const inscricaoGrupo: GrupoJogadorInsertWithGroupName = {
 				jogadorId: jogador.categoriaJogadorId,
 				grupoId: 0,
+				groupName: jogador.grupoNome,
 			};
 
 			valueToReturn.push(inscricaoGrupo);
