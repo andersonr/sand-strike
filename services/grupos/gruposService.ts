@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { GrupoJogadorInsertWithGroupName } from "@/adapters/GrupoJogadoresAdapter";
+import { GrupoJogadorComCategoria } from "@/types";
 import {
+	CategoriaGrupo,
 	CategoriaGrupoInsert,
+	GrupoJogador,
 	GrupoJogadorInsert,
 } from "@/types/supabase-types";
 import { supabaseAdmin } from "../../lib/supabaseAdmin";
@@ -59,7 +62,7 @@ export async function criarGruposAdicionandoParticipantes(
 	return data;
 }
 
-async function adicionarJogadorAoGrupo(
+export async function adicionarJogadorAoGrupo(
 	jogador: GrupoJogadorInsertWithGroupName,
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 ) {
@@ -75,4 +78,26 @@ async function adicionarJogadorAoGrupo(
 	};
 
 	return await supabaseAdmin.from("GrupoJogadores").insert(player).select("*");
+}
+
+export async function getGrupoJogadoresByCategoriaAndTipo(
+	categoriaId: number,
+	tipo: number,
+): Promise<GrupoJogadorComCategoria[]> {
+	if (!supabaseAdmin) {
+		throw new Error("Supabase admin client is not available");
+	}
+
+	const { data, error } = await supabaseAdmin
+		.from("GrupoJogadores")
+		.select("*, CategoriaGrupos(*) as CategoriaGrupos")
+		.eq("CategoriaGrupos.categoriaId", categoriaId)
+		.eq("CategoriaGrupos.tipo", tipo)
+		.returns<(GrupoJogador & { CategoriaGrupos: CategoriaGrupo })[]>();
+
+	if (error) {
+		throw error;
+	}
+
+	return data;
 }
