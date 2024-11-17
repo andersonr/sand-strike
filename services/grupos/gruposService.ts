@@ -6,6 +6,9 @@ import {
 	CategoriaGrupoInsert,
 	GrupoJogador,
 	GrupoJogadorInsert,
+	GrupoJogo,
+	GrupoJogoInsert,
+	JogoJogadorInsert,
 } from "@/types/supabase-types";
 import { supabaseAdmin } from "../../lib/supabaseAdmin";
 
@@ -25,9 +28,6 @@ export async function criarGruposAdicionandoParticipantes(
 	if (error) {
 		throw error;
 	}
-
-	console.log("Grupos criados:>>", data);
-	console.log("   >  grupoJogadores", grupoJogadores);
 
 	const jogadoresNaoCadastrados = [];
 
@@ -80,7 +80,7 @@ export async function adicionarJogadorAoGrupo(
 	return await supabaseAdmin.from("GrupoJogadores").insert(player).select("*");
 }
 
-export async function getGrupoJogadoresByCategoriaAndTipo(
+export async function getJogadoresFaseGrupoByCategoriaAndTipo(
 	categoriaId: number,
 	tipo: number,
 ): Promise<GrupoJogadorComCategoria[]> {
@@ -96,6 +96,123 @@ export async function getGrupoJogadoresByCategoriaAndTipo(
 		.returns<(GrupoJogador & { CategoriaGrupos: CategoriaGrupo })[]>();
 
 	if (error) {
+		throw error;
+	}
+
+	return data;
+}
+
+export async function criarJogosGrupo(partidas: GrupoJogadorComCategoria[][]) {
+	if (!partidas || partidas.length === 0) {
+		throw new Error("Partidas não informadas");
+	}
+
+	const valueToReturn = [];
+
+	for (let i = 0; i < partidas.length; i++) {
+		console.log(`Criando partida ${i + 1} de ${partidas.length}`);
+		const timesPartida = partidas[i];
+
+		if (timesPartida?.length === 2) {
+			const partidaCriada = await criarPartidaFaseDeGrupos(
+				timesPartida[0][0].grupoId,
+				i + 1,
+			);
+
+			if (partidaCriada) {
+				const jogadoresPartida = await adicionarJogadoresNaPartida(
+					partidaCriada,
+					partidas[i],
+				);
+
+				valueToReturn.push({
+					partida: partidaCriada,
+					jogadores: jogadoresPartida,
+				});
+			}
+		}
+	}
+
+	return valueToReturn;
+}
+
+export async function adicionarJogadoresNaPartida(
+	partida: GrupoJogo,
+	times: GrupoJogadorComCategoria[],
+) {
+	const jogadoresPartida: JogoJogadorInsert[] = [];
+
+	if (partida && times?.length === 2) {
+		const timeA = times[0];
+		const timeB = times[1];
+
+		jogadoresPartida.push(
+			{
+				jogoId: partida.id,
+				jogadorId: timeA[0].jogadorId,
+				time: 1,
+			},
+			{
+				jogoId: partida.id,
+				jogadorId: timeA[1].jogadorId,
+				time: 1,
+			},
+			{
+				jogoId: partida.id,
+				jogadorId: timeB[0].jogadorId,
+				time: 2,
+			},
+			{
+				jogoId: partida.id,
+				jogadorId: timeB[1].jogadorId,
+				time: 2,
+			},
+		);
+
+		if (!supabaseAdmin) {
+			throw new Error("Supabase admin client is not available");
+		}
+
+		const { data, error } = await supabaseAdmin
+			.from("JogoJogadores")
+			.insert(jogadoresPartida)
+			.select("*");
+
+		if (error) {
+			throw error;
+		}
+
+		return data;
+		// biome-ignore lint/style/noUselessElse: <explanation>
+	} else throw new Error("Partida ou times nao informados");
+}
+
+export async function criarPartidaFaseDeGrupos(
+	grupoId: number,
+	rodada: number,
+) {
+	const jogo: GrupoJogoInsert = {
+		grupoId: grupoId,
+		rodada: rodada,
+		saldo: 0,
+		resultadoA: 0,
+		resultadoB: 0,
+	};
+
+	if (!supabaseAdmin) {
+		throw new Error("Supabase admin client is not available");
+	}
+
+	const { data, error } = await supabaseAdmin
+		.from("GrupoJogos")
+		.insert(jogo)
+		.select("*")
+		.single<GrupoJogo>();
+
+	if (error) {
+		console.log("Erro ao criar partida:	", error);
+		console.log("	>> Erro:	", error.message);
+		console.log("Erro ao criar partida:	", error.details);
 		throw error;
 	}
 
