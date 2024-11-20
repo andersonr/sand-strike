@@ -14,16 +14,15 @@ const finalizarFaseGrupos = async (
 				.json({ message: "categoriaId is required or incorrect" });
 		}
 
+		// Faz a apuração dos classificados e cria o grupo com os participantes do Mata Mata
 		const valueToReturn = await finalizarFaseGruposDaCategoria(
 			Number(categoriaId),
 		);
 
-		res
-			.status(200)
-			.json({
-				message: "Fase de grupos finalizada com sucesso!",
-				valueToReturn,
-			});
+		res.status(200).json({
+			message: "Fase de grupos finalizada com sucesso!",
+			valueToReturn,
+		});
 	} else {
 		res.status(405).json({ message: "Método não permitido" });
 	}
