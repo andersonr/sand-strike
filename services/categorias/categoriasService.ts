@@ -59,7 +59,7 @@ export async function finalizarFaseGruposDaCategoria(categoriaId: number) {
 		jogadoresMataMata,
 	);
 
-	return { jogadoresClassificados, grupoDeMataMataCriado };
+	return { grupoDeMataMataCriado };
 }
 
 /**
