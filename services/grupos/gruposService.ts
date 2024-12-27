@@ -12,27 +12,34 @@ import {
 } from "@/types/supabase-types";
 import { supabaseAdmin } from "../../lib/supabaseAdmin";
 
+interface GruposComJogadores {
+	grupos: CategoriaGrupo[];
+	jogadores: GrupoJogador[];
+}
+
 export async function criarGruposAdicionandoParticipantes(
 	categoriaGrupos: CategoriaGrupoInsert[],
 	grupoJogadores: GrupoJogadorInsertWithGroupName[],
-) {
+): Promise<GruposComJogadores> {
 	if (!supabaseAdmin) {
 		throw new Error("Supabase admin client is not available");
 	}
 
-	const { data, error } = await supabaseAdmin
+	const { data: grupos, error } = await supabaseAdmin
 		.from("CategoriaGrupos")
 		.insert(categoriaGrupos)
-		.select("*");
+		.select("*")
+		.returns<CategoriaGrupo[]>();
 
 	if (error) {
 		throw error;
 	}
 
 	const jogadoresNaoCadastrados = [];
+	const jogadoresCadastrados = [];
 
 	for (const jogador of grupoJogadores) {
-		const grupoCriado = data.find(
+		const grupoCriado = grupos.find(
 			(grupo) => grupo.nome === jogador.groupName.toString(),
 		);
 
@@ -40,13 +47,15 @@ export async function criarGruposAdicionandoParticipantes(
 			console.log(`Grupo criado: ${grupoCriado.nome} - ID: ${grupoCriado.id}`);
 			jogador.grupoId = grupoCriado.id;
 
-			const { error } = await adicionarJogadorAoGrupo(jogador);
+			const { data, error } = await adicionarJogadorAoGrupo(jogador);
 
 			if (error) {
 				jogadoresNaoCadastrados.push({ erro: error, jogador });
 				console.log(
 					`Jogador não cadastrados: ${jogador.jogadorId} do grupo ${jogador.grupoId}`,
 				);
+			} else if (data) {
+				jogadoresCadastrados.push(...data);
 			}
 		} else {
 			console.log(
@@ -59,7 +68,10 @@ export async function criarGruposAdicionandoParticipantes(
 		throw new Error("Jogadores nao cadastrados");
 	}
 
-	return data;
+	return {
+		grupos,
+		jogadores: jogadoresCadastrados
+	};
 }
 
 export async function adicionarJogadorAoGrupo(
